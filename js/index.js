@@ -39,12 +39,27 @@ $(document).ready(function () {
 
 	var controller = {
 
+		//going to store the data from the ajax call
+		jsonStorage: {},
+
 		lookupStock: function(){
 			var lookUpButton = $('button.lookup');
 			var stockSearchValue = $('.search');
 			lookUpButton.on('click', function(){
 				var textbox = stockSearchValue.val();
-				$('.rightSide').append('<h1>' + textbox + '</h1>')
+				$.ajax({
+					url: 'http://data.benzinga.com/stock/' + textbox,
+					type: 'GET',
+					dataType: 'jsonp',
+					error: function(){
+						alert('please enter a valid stock symbol!');
+					},
+					success: function(data){
+						jsonStorage = data;
+						console.table(data);
+					}
+				});
+
 			});
 		}
 
