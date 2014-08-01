@@ -1,0 +1,85 @@
+*, *:before, *:after{
+	box-sizing: border-box;
+	-moz-box-sizing: border-box; 
+	-webkit-box-sizing: border-box;
+}
+
+.container{
+	width: 960px;
+	margin: 0 auto;
+}
+header{
+	h1{
+		float: left;
+	}
+	.searchBox{
+		float: right;
+		margin-top: 20px;
+	}
+}
+.leftSide{
+	width: 48%;
+	clear: left;
+	float: left;
+	margin-right: 20px;
+	header{
+		height: 40px;
+		width: 98%;
+		span{
+			margin-top:10px;
+			font-size: 1.2em;
+		}
+	}
+	header,
+	div{
+		border: 1px solid black;
+		p{
+			text-align: center;
+		}
+	}
+	span{
+		display: inline-block;
+		text-align: center;
+	}
+	.bidHeader{
+		margin-left: 100px;
+	}
+	.askHeader{
+		float: right;
+		margin-right: 100px;
+	}
+	div{
+		width: 49%;
+		float: left;
+		margin-bottom: 20px;
+	}
+}
+
+.rightSide{
+	width: 49%;
+	float: right;
+	header{
+		height: 40px;
+		:first-child{
+			margin-left: 20px;
+		}
+		span{
+			font-size: 1.2em;
+			margin-right: 45px;
+			margin-top: 10px;
+		}
+	}
+	div{
+		width: 25%;
+		float: left;
+		height: 52px;	
+	}
+	header,
+	div{
+		border: 1px solid black;
+		p{
+			text-align: center;
+		}
+	}
+
+}

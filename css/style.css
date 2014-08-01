@@ -1,0 +1,84 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+.container {
+  width: 960px;
+  margin: 0 auto;
+}
+header h1 {
+  float: left;
+}
+header .searchBox {
+  float: right;
+  margin-top: 20px;
+}
+.leftSide {
+  width: 48%;
+  clear: left;
+  float: left;
+  margin-right: 20px;
+}
+.leftSide header {
+  height: 40px;
+  width: 98%;
+}
+.leftSide header span {
+  margin-top: 10px;
+  font-size: 1.2em;
+}
+.leftSide header,
+.leftSide div {
+  border: 1px solid black;
+}
+.leftSide header p,
+.leftSide div p {
+  text-align: center;
+}
+.leftSide span {
+  display: inline-block;
+  text-align: center;
+}
+.leftSide .bidHeader {
+  margin-left: 100px;
+}
+.leftSide .askHeader {
+  float: right;
+  margin-right: 100px;
+}
+.leftSide div {
+  width: 49%;
+  float: left;
+  margin-bottom: 20px;
+}
+.rightSide {
+  width: 49%;
+  float: right;
+}
+.rightSide header {
+  height: 40px;
+}
+.rightSide header :first-child {
+  margin-left: 20px;
+}
+.rightSide header span {
+  font-size: 1.2em;
+  margin-right: 45px;
+  margin-top: 10px;
+}
+.rightSide div {
+  width: 25%;
+  float: left;
+  height: 52px;
+}
+.rightSide header,
+.rightSide div {
+  border: 1px solid black;
+}
+.rightSide header p,
+.rightSide div p {
+  text-align: center;
+}
