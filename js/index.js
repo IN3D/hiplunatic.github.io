@@ -34,11 +34,25 @@ $(document).ready(function () {
 	};
 
 	var model = {
-		var stockValue = $('.search').val();
-
+		stockSearchValue: $('.search')
 	};
+
+	var controller = {
+
+		lookupStock: function(){
+			var lookUpButton = $('button.lookup');
+			var stockSearchValue = $('.search');
+			lookUpButton.on('click', function(){
+				var textbox = stockSearchValue.val();
+				$('.rightSide').append('<h1>' + textbox + '</h1>')
+			});
+		}
+
+	}
+
+	controller.lookupStock();
 
 	view.updateStockName("test");
 
-	
+
 });
