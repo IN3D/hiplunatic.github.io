@@ -4,17 +4,17 @@ $(document).ready(function () {
 		//this updates the stockname title
 		updateStockName: function(stockName){
 			var stockNameTitle = $('.leftSide h1');
-			stockNameTitle.append(stockName);
+			stockNameTitle.html(stockName);
 		},
 		//this updates the bid number
 		updateBidNumber: function(bidNumber){
 			var actualBidNumber = $('.bid p');
-			actualBidNumber.append(bidNumber);
+			actualBidNumber.html(bidNumber);
 		},
 		//this updates the ask number
 		updateAskNumber: function(askNumber){
 			var actualAskNumber = $('.ask p');
-			actualAskNumber.append(askNumber);
+			actualAskNumber.html(askNumber);
 		},
 		//this updates the company name under portfolio
 		updateCompany: function(companyPortfolio){
@@ -56,7 +56,10 @@ $(document).ready(function () {
 					},
 					success: function(data){
 						jsonStorage = data;
-						console.table(data);
+						console.dir(jsonStorage);
+						view.updateStockName(jsonStorage.name);
+						view.updateBidNumber(jsonStorage.bid);
+						view.updateAskNumber(jsonStorage.ask)
 					}
 				});
 
@@ -66,8 +69,5 @@ $(document).ready(function () {
 	}
 
 	controller.lookupStock();
-
-	view.updateStockName("test");
-
 
 });
