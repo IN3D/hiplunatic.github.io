@@ -19,7 +19,7 @@ $(document).ready(function () {
 		//this updates the company name under portfolio
 		updateCompany: function(companyPortfolio){
 			var updateCompPort = $('.company p');
-			updateCompPort.append('<p>' + this.updateStockName + '</p>');
+			updateCompPort.append('<p>' + this.stockName + '</p>');
 		},
 		//this updates quantity of each stock
 		updateQuantity: function(quantityPortfolio){
