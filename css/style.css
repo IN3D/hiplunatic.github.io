@@ -72,7 +72,7 @@ header .searchBox {
 .rightSide div {
   width: 25%;
   float: left;
-  height: 52px;
+  min-height: 52px;
 }
 .rightSide header,
 .rightSide div {
