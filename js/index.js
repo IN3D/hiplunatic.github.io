@@ -30,18 +30,18 @@ var view = {
 		},
 		//this updates the company name under portfolio
 		updateCompany: function(companyPortfolio){
-			var updateCompPort = $('.company > p');
-			updateCompPort.html(companyPortfolio);
+			var updateCompPort = $('.company');
+			updateCompPort.append('<p>' + companyPortfolio + '</p>');
 		},
 		//this updates quantity of each stock
 		updateQuantity: function(quantityPortfolio){
-			var updateQuantityPort = $('.quantity > p');
-			updateQuantityPort.html(quantityPortfolio);
+			var updateQuantityPort = $('.quantity');
+			updateQuantityPort.append('<p>' + quantityPortfolio + '</p>');
 		},
 		//this updates the price paid for ech stock
 		updatePrice: function(pricePortfolio){
-			var updatePricePort = $('.pricePaid > p');
-			updatePrice.html(pricePortfolio);
+			var updatePriceEl = $('.pricePaid');
+			updatePriceEl.append('<p>' + pricePortfolio + '</p>');
 		}
 	};
 
@@ -49,6 +49,8 @@ var view = {
 
 		//users balance
 		balance: 150000,
+		askPrice: 0,
+		bidPrice: 0
 
 
 		//click function for buying items
@@ -75,6 +77,8 @@ var view = {
 					success: function(data){
 						jsonStorage = data;
 						console.dir(jsonStorage);
+						model.askPrice = jsonStorage.ask;
+						model.bidPrice = jsonStorage.bid;
 						view.updateStockName(jsonStorage.name);
 						view.updateBidNumber(jsonStorage.bid);
 						view.updateAskNumber(jsonStorage.ask);
@@ -89,19 +93,23 @@ var view = {
 			//the buy button
 			var buyButton = $('.buy');
 			//value of the text box next to the buy/sell button
-			var quantityValue = $('.quantity');
-			buyButton.on('click', function(){
 
+			buyButton.on('click', function(){
+				var quantityValue = $('.purchase');
 				//gets value of the textbox
-				var quantityToBuy = parseInt(quantityValue.text());
+				var quantityToBuy = quantityValue.val();
 				//multiplies the textbox value by the ask number
-				var pricePaid = quantityToBuy * view.updateAskNumber();
+				var pricePaid = quantityToBuy * model.askPrice;
+				//deducts amount from your balance
+				model.balance = model.balance - pricePaid;
+				view.updateBank(model.balance);
+
 				//updates the quantity number on the right side with the amount
 				//of shares you bought
 				view.updateQuantity(quantityToBuy);
 				//updates the price paid on the right based on when you bought the
 				//stocks
-				view.updatePrice(quantityToBuy);
+				view.updatePrice(jsonStorage.bid);
 				//updates the company name on the right side based on what company's
 				//stocks you bought
 				view.updateCompany(jsonStorage.name);
