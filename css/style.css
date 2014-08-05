@@ -58,16 +58,24 @@ header .searchBox {
   width: 49%;
   float: right;
 }
+.rightSide h1 {
+  float: left;
+}
+.rightSide h3 {
+  float: right;
+}
 .rightSide header {
   height: 40px;
+  clear: both;
 }
 .rightSide header :first-child {
   margin-left: 20px;
 }
 .rightSide header span {
   font-size: 1.2em;
-  margin-right: 45px;
+  margin-right: 42px;
   margin-top: 10px;
+  width: 25%;
 }
 .rightSide div {
   width: 25%;
@@ -81,4 +89,11 @@ header .searchBox {
 .rightSide header p,
 .rightSide div p {
   text-align: center;
+}
+.rightSide .sellStocksButton {
+  margin: 15px 33px;
+}
+.rightSide .amountToSell {
+  width: 90%;
+  margin: 15px 0 0 5px;
 }

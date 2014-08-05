@@ -42,6 +42,11 @@ var view = {
 		updatePrice: function(pricePortfolio){
 			var updatePriceEl = $('.pricePaid');
 			updatePriceEl.append('<p>' + pricePortfolio + '</p>');
+		},
+		sellYourStocks: function(){
+			var stockSellEl = $('.sellStocks');
+			stockSellEl.append('<input type="text" class="amountToSell">');			
+			stockSellEl.append('<button class="sellStocksButton">sell it!</button>');
 		}
 	};
 
@@ -50,11 +55,8 @@ var view = {
 		//users balance
 		balance: 150000,
 		askPrice: 0,
-		bidPrice: 0
-
-
-		//click function for buying items
-
+		bidPrice: 0,
+		nameOfCompany: ""
 	};
 
 	var controller = {
@@ -79,6 +81,7 @@ var view = {
 						console.dir(jsonStorage);
 						model.askPrice = jsonStorage.ask;
 						model.bidPrice = jsonStorage.bid;
+						model.nameOfCompany = jsonStorage.name;
 						view.updateStockName(jsonStorage.name);
 						view.updateBidNumber(jsonStorage.bid);
 						view.updateAskNumber(jsonStorage.ask);
@@ -101,24 +104,33 @@ var view = {
 				//multiplies the textbox value by the ask number
 				var pricePaid = quantityToBuy * model.askPrice;
 				//deducts amount from your balance
-				model.balance = model.balance - pricePaid;
-				view.updateBank(model.balance);
-
-				//updates the quantity number on the right side with the amount
-				//of shares you bought
-				view.updateQuantity(quantityToBuy);
-				//updates the price paid on the right based on when you bought the
-				//stocks
-				view.updatePrice(jsonStorage.bid);
-				//updates the company name on the right side based on what company's
-				//stocks you bought
-				view.updateCompany(jsonStorage.name);
+				if(pricePaid > model.balance){
+					alert("you don't have enough to buy this!");
+					model.balance = 0;
+				} else {
+					model.balance = model.balance - pricePaid;
+					view.updateBank(model.balance);
+					//updates the quantity number on the right side with the amount
+					//of shares you bought
+					view.updateQuantity(quantityToBuy);
+					//updates the price paid on the right based on when you bought the
+					//stocks
+					view.updatePrice(jsonStorage.bid);
+					//updates the company name on the right side based on what company's
+					//stocks you bought
+					view.updateCompany(jsonStorage.name);
+					//adds a sell your stock button
+					view.sellYourStocks();
+				}	
+				
 
 			}); //end of click function for the buy button
 		}, //end of the buy stock functionality
 
 		//sell stock functionality
 		sellStock: function(){
-			var sellButton = $('.sell');
+			var sellButton = $('.sellStocksButton');
+			sellButton.on('click', function(){
+			});
 		}
 	}
