@@ -3,6 +3,11 @@ $(document).ready(function () {
 	//this updates the view based on the logic
 	controller.lookupStock();
 	controller.buyStock();
+	controller.sellStock();
+
+    $('.purchase').keyup(function(){
+        $(this).val($(this).val().replace(/[^\d]/,''));
+    });
 });
 
 var view = {
@@ -47,6 +52,9 @@ var view = {
 			var stockSellEl = $('.sellStocks');
 			stockSellEl.append('<input type="text" class="amountToSell">');			
 			stockSellEl.append('<button class="sellStocksButton">sell it!</button>');
+			$('.amountToSell').keyup(function(){
+       			 $(this).val($(this).val().replace(/[^\d]/,''));
+    		});
 		}
 	};
 
@@ -129,8 +137,29 @@ var view = {
 
 		//sell stock functionality
 		sellStock: function(){
-			var sellButton = $('.sellStocksButton');
+			var sellButton = $('button.sellStocksButton');
 			sellButton.on('click', function(){
+				//saving the textbox to a var
+				var sellValue = $('.amountToSell');
+				//getting value of the sell text box
+				var sellTotal = sellValue.val();
+				//checking to see if a user is selling too many shares
+				if(sellTotal > view.updateQuantity){
+					alert("you can't sell more then you own!")
+				} else {
+					//adding the sale of shares to the balance
+					model.balance = sellTotal * model.bidPrice;
+					//updating the shares section based on how many shares are sold
+					view.updateQuantity = view.updateQuantity - sellTotal;
+					//removing the stock from the portfolio if the new quantity is 0
+					if(view.updateQuantity == 0){
+						view.updateCompany.remove();
+						view.updateQuantity.remove();
+						view.updatePrice.remove();
+						view.sellYourStocks.remove();
+					}
+				}
+
 			});
 		}
 	}
