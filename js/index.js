@@ -166,19 +166,17 @@ var view = {
 			$('.sellStocksButton').on('click', '.sellStocksButton', function(){
 				console.log("yes")
 				//saving the textbox to a var
-				var sellValueEl = $('.amountToSell');
-				//getting value of the sell text box
-				var sellTotal = sellValueEl.val();
+				var sellValueEl = $('.amountToSell').val();
 				//checking to see if a user is selling too many shares
-				if(sellTotal > view.updateQuantity()){
+				if(sellValueEl > view.updateQuantity()){
 					alert("you can't sell more then you own!")
 				} else {
 					//adding the sale of shares to the balance
 					model.balance = sellTotal * model.bidPrice;
 					//updating the shares section based on how many shares are sold
-					view.updateQuantity = view.updateQuantity - sellTotal;
+					view.updateQuantity =- sellTotal;
 					//removing the stock from the portfolio if the new quantity is 0
-					if(view.updateQuantity == 0){
+					if(view.updateQuantity === 0){
 						view.updateCompany.remove();
 						view.updateQuantity.remove();
 						view.updatePrice.remove();
