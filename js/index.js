@@ -64,7 +64,8 @@ var view = {
 		balance: 150000,
 		askPrice: 0,
 		bidPrice: 0,
-		nameOfCompany: ""
+		nameOfCompany: "",
+		stock:{}
 	};
 
 	var controller = {
@@ -90,9 +91,9 @@ var view = {
 						model.askPrice = jsonStorage.ask;
 						model.bidPrice = jsonStorage.bid;
 						model.nameOfCompany = jsonStorage.name;
-						view.updateStockName(jsonStorage.name);
-						view.updateBidNumber(jsonStorage.bid);
-						view.updateAskNumber(jsonStorage.ask);
+						view.updateStockName(model.nameOfCompany);
+						view.updateBidNumber(model.bidPrice);
+						view.updateAskNumber(model.askPrice);
 					}
 				});
 
@@ -137,14 +138,14 @@ var view = {
 
 		//sell stock functionality
 		sellStock: function(){
-			var sellButton = $('button.sellStocksButton');
-			sellButton.on('click', function(){
+			$('.sellStocksButton').on('click', function(){
+				console.log("yes")
 				//saving the textbox to a var
-				var sellValue = $('.amountToSell');
+				var sellValueEl = $('.amountToSell');
 				//getting value of the sell text box
-				var sellTotal = sellValue.val();
+				var sellTotal = sellValueEl.val();
 				//checking to see if a user is selling too many shares
-				if(sellTotal > view.updateQuantity){
+				if(sellTotal > view.updateQuantity()){
 					alert("you can't sell more then you own!")
 				} else {
 					//adding the sale of shares to the balance
