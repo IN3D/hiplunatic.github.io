@@ -3,11 +3,39 @@ $(document).ready(function () {
 	//this updates the view based on the logic
 	controller.lookupStock();
 	controller.buyStock();
-	controller.sellStock();
+	// controller.sellStock();
 
     $('.purchase').keyup(function(){
         $(this).val($(this).val().replace(/[^\d]/,''));
     });
+
+
+    $('.sellStocksButton').on('click', function(){
+				console.log("yes")
+				//saving the textbox to a var
+				var sellValueEl = $('.amountToSell');
+				//getting value of the sell text box
+				var sellTotal = sellValueEl.val();
+				//checking to see if a user is selling too many shares
+				if(sellTotal > view.updateQuantity()){
+					alert("you can't sell more then you own!")
+				} else {
+					//adding the sale of shares to the balance
+					model.balance = sellTotal * model.bidPrice;
+					//updating the shares section based on how many shares are sold
+					view.updateQuantity = view.updateQuantity - sellTotal;
+					//removing the stock from the portfolio if the new quantity is 0
+					if(view.updateQuantity == 0){
+						view.updateCompany.remove();
+						view.updateQuantity.remove();
+						view.updatePrice.remove();
+						view.sellYourStocks.remove();
+					}
+				}
+
+	});
+
+
 });
 
 var view = {
@@ -138,29 +166,29 @@ var view = {
 
 		//sell stock functionality
 		sellStock: function(){
-			$('.sellStocksButton').on('click', function(){
-				console.log("yes")
-				//saving the textbox to a var
-				var sellValueEl = $('.amountToSell');
-				//getting value of the sell text box
-				var sellTotal = sellValueEl.val();
-				//checking to see if a user is selling too many shares
-				if(sellTotal > view.updateQuantity()){
-					alert("you can't sell more then you own!")
-				} else {
-					//adding the sale of shares to the balance
-					model.balance = sellTotal * model.bidPrice;
-					//updating the shares section based on how many shares are sold
-					view.updateQuantity = view.updateQuantity - sellTotal;
-					//removing the stock from the portfolio if the new quantity is 0
-					if(view.updateQuantity == 0){
-						view.updateCompany.remove();
-						view.updateQuantity.remove();
-						view.updatePrice.remove();
-						view.sellYourStocks.remove();
-					}
-				}
+			// $('.sellStocksButton').on('click', function(){
+			// 	console.log("yes")
+			// 	//saving the textbox to a var
+			// 	var sellValueEl = $('.amountToSell');
+			// 	//getting value of the sell text box
+			// 	var sellTotal = sellValueEl.val();
+			// 	//checking to see if a user is selling too many shares
+			// 	if(sellTotal > view.updateQuantity()){
+			// 		alert("you can't sell more then you own!")
+			// 	} else {
+			// 		//adding the sale of shares to the balance
+			// 		model.balance = sellTotal * model.bidPrice;
+			// 		//updating the shares section based on how many shares are sold
+			// 		view.updateQuantity = view.updateQuantity - sellTotal;
+			// 		//removing the stock from the portfolio if the new quantity is 0
+			// 		if(view.updateQuantity == 0){
+			// 			view.updateCompany.remove();
+			// 			view.updateQuantity.remove();
+			// 			view.updatePrice.remove();
+			// 			view.sellYourStocks.remove();
+			// 		}
+			// 	}
 
-			});
+			// });
 		}
 	}
