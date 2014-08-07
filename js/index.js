@@ -3,11 +3,36 @@ $(document).ready(function () {
 	// this updates the view based on the logic
 	controller.lookupStock();
 	controller.buyStock();
-	controller.sellStock();
+	//controller.sellStock();
 
     $('.purchase').keyup(function() {
         $(this).val($(this).val().replace(/[^\d]/,''));
     });
+
+    //how to sell stocks
+    $('.sellStocksButton').on('click', '.sellStocksButton', function() {
+		console.log("yes");
+		// saving the textbox to a var
+		// var sellValue = $('.amountToSell').val();
+		// // checking to see if a user is selling too many shares
+		// if(sellValue > view.updateQuantity()) {
+		// 	alert("you can't sell more then you own!")
+		// } else {
+		// // adding the sale of shares to the balance
+		// model.balance = sellTotal * model.bidPrice;
+		// // updating the shares section based on how many shares are sold
+		// view.updateQuantity -= sellTotal;
+		// // removing the stock from the portfolio if the new quantity is 0
+		// if(view.updateQuantity === 0) {
+		// 	view.updateCompany.remove();
+		// 	view.updateQuantity.remove();
+		// 	view.updatePrice.remove();
+		// 	view.sellYourStocks.remove();
+		// 	}
+		// }
+
+	});
+
 });
 
 var view = {
@@ -86,11 +111,11 @@ var view = {
 						alert('please enter a valid stock symbol!');
 					},
 					success: function(data) {
-						this.jsonStorage = data;
-						console.dir(this.jsonStorage);
-						model.askPrice = this.jsonStorage.ask;
-						model.bidPrice = this.jsonStorage.bid;
-						model.nameOfCompany = this.jsonStorage.name;
+						jsonStorage = data;
+						console.dir(jsonStorage);
+						model.askPrice = jsonStorage.ask;
+						model.bidPrice = jsonStorage.bid;
+						model.nameOfCompany = jsonStorage.name;
 						view.updateStockName(model.nameOfCompany);
 						view.updateBidNumber(model.bidPrice);
 						view.updateAskNumber(model.askPrice);
@@ -124,10 +149,10 @@ var view = {
 					view.updateQuantity(quantityToBuy);
 					// updates the price paid on the right based on when you bought the
 					// stocks
-					view.updatePrice(this.jsonStorage.bid);
+					view.updatePrice(jsonStorage.bid);
 					// updates the company name on the right side based on what company's
 					// stocks you bought
-					view.updateCompany(this.jsonStorage.name);
+					view.updateCompany(model.nameOfCompany);
 					// adds a sell your stock button
 					view.sellYourStocks();
 				}	
@@ -138,27 +163,27 @@ var view = {
 
 		// sell stock functionality
 		sellStock: function() {
-			$('.sellStocksButton').on('click', '.sellStocksButton', function() {
-				console.log("yes");
-				// saving the textbox to a var
-				var sellValue = $('.amountToSell').val();
-				// checking to see if a user is selling too many shares
-				if(sellValue > view.updateQuantity()) {
-					alert("you can't sell more then you own!")
-				} else {
-					// adding the sale of shares to the balance
-					model.balance = sellTotal * model.bidPrice;
-					// updating the shares section based on how many shares are sold
-					view.updateQuantity -= sellTotal;
-					// removing the stock from the portfolio if the new quantity is 0
-					if(view.updateQuantity === 0) {
-						view.updateCompany.remove();
-						view.updateQuantity.remove();
-						view.updatePrice.remove();
-						view.sellYourStocks.remove();
-					}
-				}
+			// $('.sellStocksButton').on('click', 'button.sellStocksButton', function() {
+			// 	console.log("yes");
+			// 	// saving the textbox to a var
+			// 	var sellValue = $('.amountToSell').val();
+			// 	// checking to see if a user is selling too many shares
+			// 	if(sellValue > view.updateQuantity()) {
+			// 		alert("you can't sell more then you own!")
+			// 	} else {
+			// 		// adding the sale of shares to the balance
+			// 		model.balance = sellTotal * model.bidPrice;
+			// 		// updating the shares section based on how many shares are sold
+			// 		view.updateQuantity -= sellTotal;
+			// 		// removing the stock from the portfolio if the new quantity is 0
+			// 		if(view.updateQuantity === 0) {
+			// 			view.updateCompany.remove();
+			// 			view.updateQuantity.remove();
+			// 			view.updatePrice.remove();
+			// 			view.sellYourStocks.remove();
+			// 		}
+			// 	}
 
-			});
+			// });
 		}
 	};
