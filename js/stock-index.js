@@ -8,31 +8,6 @@ $(document).ready(function () {
     $('.purchase').keyup(function() {
         $(this).val($(this).val().replace(/[^\d]/,''));
     });
-
-    //how to sell stocks
-    $('.sellStocksButton').on('click', '.sellStocksButton', function() {
-		console.log("yes");
-		// saving the textbox to a var
-		// var sellValue = $('.amountToSell').val();
-		// // checking to see if a user is selling too many shares
-		// if(sellValue > view.updateQuantity()) {
-		// 	alert("you can't sell more then you own!")
-		// } else {
-		// // adding the sale of shares to the balance
-		// model.balance = sellTotal * model.bidPrice;
-		// // updating the shares section based on how many shares are sold
-		// view.updateQuantity -= sellTotal;
-		// // removing the stock from the portfolio if the new quantity is 0
-		// if(view.updateQuantity === 0) {
-		// 	view.updateCompany.remove();
-		// 	view.updateQuantity.remove();
-		// 	view.updatePrice.remove();
-		// 	view.sellYourStocks.remove();
-		// 	}
-		// }
-
-	});
-
 });
 
 var view = {
@@ -80,7 +55,10 @@ var view = {
 			$('.amountToSell').keyup(function() {
        			 $(this).val($(this).val().replace(/[^\d]/,''));
     		});
-		}
+    		$('.sellStocksButton').on('click', function(){
+    			console.log('success');
+    		});
+    	}
 	};
 
 	var model = {
@@ -90,13 +68,17 @@ var view = {
 		askPrice: 0,
 		bidPrice: 0,
 		nameOfCompany: "",
-		stock:{}
+		stock:{
+			"ford": {
+				qty: 6,
+				bid: 10
+			}
+		}
 	};
 
 	var controller = {
 
 		// going to store the data from the ajax call
-		jsonStorage: {},
 
 		lookupStock: function() {
 			var lookUpButton = $('button.lookup');
@@ -111,11 +93,10 @@ var view = {
 						alert('please enter a valid stock symbol!');
 					},
 					success: function(data) {
-						jsonStorage = data;
-						console.dir(jsonStorage);
-						model.askPrice = jsonStorage.ask;
-						model.bidPrice = jsonStorage.bid;
-						model.nameOfCompany = jsonStorage.name;
+						console.dir(data);
+						model.askPrice = data.ask;
+						model.bidPrice = data.bid;
+						model.nameOfCompany = data.name;
 						view.updateStockName(model.nameOfCompany);
 						view.updateBidNumber(model.bidPrice);
 						view.updateAskNumber(model.askPrice);
