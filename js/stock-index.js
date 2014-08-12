@@ -65,20 +65,16 @@ var view = {
 
 		// users balance
 		balance: 150000,
-		askPrice: 0,
-		bidPrice: 0,
-		nameOfCompany: "",
-		stock:{
-			"ford": {
-				qty: 6,
-				bid: 10
-			}
-		}
+		askPriceTemp: 0,
+		bidPriceTemp: 0,
+		nameOfCompanyTemp: "",
+		stock:[]
 	};
 
 	var controller = {
 
 		// going to store the data from the ajax call
+		jsonStorage: {},
 
 		lookupStock: function() {
 			var lookUpButton = $('button.lookup');
@@ -93,13 +89,15 @@ var view = {
 						alert('please enter a valid stock symbol!');
 					},
 					success: function(data) {
-						console.dir(data);
-						model.askPrice = data.ask;
-						model.bidPrice = data.bid;
-						model.nameOfCompany = data.name;
-						view.updateStockName(model.nameOfCompany);
-						view.updateBidNumber(model.bidPrice);
-						view.updateAskNumber(model.askPrice);
+						jsonStorage = data;
+						console.dir(jsonStorage);
+						model.askPriceTemp = jsonStorage.ask;
+						model.bidPriceTemp = jsonStorage.bid;
+						model.nameOfCompanyTemp = jsonStorage.name;
+
+						view.updateStockName(model.nameOfCompanyTemp);
+						view.updateBidNumber(model.bidPriceTemp);
+						view.updateAskNumber(model.askPriceTemp);
 					}
 				});
 
@@ -121,8 +119,10 @@ var view = {
 				// deducts amount from your balance
 				if(pricePaid > model.balance) {
 					alert("you don't have enough to buy this!");
-					model.balance = 0;
 				} else {
+					//push the name of the comapny, and the bid/ask prices to the model
+					model.stock.push({name : model.nameOfCompanyTemp, bid : model.bidPriceTemp, ask : model.askPriceTemp});
+					//updates the balance based on how much stock you bought
 					model.balance = model.balance - pricePaid;
 					view.updateBank(model.balance);
 					// updates the quantity number on the right side with the amount
