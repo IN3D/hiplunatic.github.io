@@ -1,12 +1,22 @@
 <html>
 <head>
-	<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/bootstrap.css"/>
+	<script type="text/javascript" src="js/vendor/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="js/stock-index.js"></script>
-	<link rel="stylesheet" type="text/css" href="css/stock-style.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<title>simple stock portfolio</title>
 </head>
 <body>
 	<div class="container">
+		<ul class="nav nav-pills">
+			<li><a href="index.html">Home</a></li>
+			<li class="active"><a href="stock.html">Stock Exchange(non-angular version)</a></li>
+			<li><a href="stock-angular.html">Stock Exchange(angular version)</a></li>
+			<li><a href="testme.html">CheckBox Test</a></li>
+		</ul>
 		<header>
 			<h1>Simple stock Exchange</h1>
 			<div class="searchBox">
@@ -47,7 +57,7 @@
 				<div class="sellStocks">
 				</div>
 		</section>
+		<h3 class="version">Version 0.6</h3>
 	</div>
-	<h3>Version 0.5</h3>
 </body>
 </html>

@@ -1,14 +1,14 @@
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-}
-.container {
-  width: 960px;
-  margin: 0 auto;
-}
+/*****************************
+****David Jensen's Github playground styling
+****Author: David Jensen
+****Date: 8-13-14
+******************************/
+/*****************************
+****Index Page Styling
+******************************/
+/*****************************
+****Stock Exchange (jQuery version) Page Styling
+******************************/
 header h1 {
   float: left;
 }
@@ -96,4 +96,28 @@ header .searchBox {
 .rightSide .amountToSell {
   width: 90%;
   margin: 15px 0 0 5px;
+}
+.version {
+  clear: both;
+  text-align: center;
+}
+/*****************************
+****Angular Stock Exchange Page Styling
+******************************/
+/*****************************
+****CheckBox Test Page Styling
+******************************/
+form {
+  width: 50%;
+  float: left;
+}
+.form-group label input {
+  margin-right: 10px;
+}
+.selected {
+  color: green;
+}
+.results {
+  width: 50%;
+  float: left;
 }
