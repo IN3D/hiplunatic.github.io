@@ -51,7 +51,7 @@ var view = {
 		sellYourStocks: function() {
 			var stockSellEl = $('.sellStocks');
 			stockSellEl.append('<input type="text" class="amountToSell">');			
-			stockSellEl.append('<button class="sellStocksButton">sell it!</button>');
+			stockSellEl.append('<button class="sellStocksButton" data-symbol="' + model.symbolTemp + '">sell it!</button>');
 			$('.amountToSell').keyup(function() {
        			 $(this).val($(this).val().replace(/[^\d]/,''));
     		});
@@ -68,6 +68,8 @@ var view = {
 		askPriceTemp: 0,
 		bidPriceTemp: 0,
 		nameOfCompanyTemp: "",
+		symbolTemp: "",
+		quantity: 0,
 		stock:[]
 	};
 
@@ -94,6 +96,7 @@ var view = {
 						model.askPriceTemp = jsonStorage.ask;
 						model.bidPriceTemp = jsonStorage.bid;
 						model.nameOfCompanyTemp = jsonStorage.name;
+						model.symbolTemp = jsonStorage.symbol;
 
 						view.updateStockName(model.nameOfCompanyTemp);
 						view.updateBidNumber(model.bidPriceTemp);
@@ -121,7 +124,11 @@ var view = {
 					alert("you don't have enough to buy this!");
 				} else {
 					//push the name of the company, and the bid/ask prices to the model
-					model.stock.push({name : model.nameOfCompanyTemp, bid : model.bidPriceTemp, ask : model.askPriceTemp});
+					model.stock.push({symbol : model.symbolTemp, name : model.nameOfCompanyTemp, 
+						bid : model.bidPriceTemp, ask : model.askPriceTemp, quantity : quantityToBuy});
+
+					//console logging out the stock, and buy amount info
+					console.dir(model.stock)
 					//updates the balance based on how much stock you bought
 					model.balance = model.balance - pricePaid;
 					view.updateBank(model.balance);
