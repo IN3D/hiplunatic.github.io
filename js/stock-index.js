@@ -3,7 +3,7 @@ $(document).ready(function () {
 	// this updates the view based on the logic
 	controller.lookupStock();
 	controller.buyStock();
-	//controller.sellStock();
+	controller.sellStock();
 
     $('.purchase').keyup(function() {
         $(this).val($(this).val().replace(/[^\d]/,''));
@@ -84,7 +84,7 @@ var view = {
 				$.ajax({
 					url: 'http://data.benzinga.com/stock/' + textbox,
 					type: 'GET',
-					dataType: 'jsonp',
+					dataType: 'json',
 					error: function() {
 						alert('please enter a valid stock symbol!');
 					},
@@ -115,12 +115,12 @@ var view = {
 				// gets value of the textbox
 				var quantityToBuy = quantityValue.val();
 				// multiplies the textbox value by the ask number
-				var pricePaid = quantityToBuy * model.askPrice;
+				var pricePaid = quantityToBuy * model.askPriceTemp;
 				// deducts amount from your balance
 				if(pricePaid > model.balance) {
 					alert("you don't have enough to buy this!");
 				} else {
-					//push the name of the comapny, and the bid/ask prices to the model
+					//push the name of the company, and the bid/ask prices to the model
 					model.stock.push({name : model.nameOfCompanyTemp, bid : model.bidPriceTemp, ask : model.askPriceTemp});
 					//updates the balance based on how much stock you bought
 					model.balance = model.balance - pricePaid;
@@ -133,7 +133,7 @@ var view = {
 					view.updatePrice(jsonStorage.bid);
 					// updates the company name on the right side based on what company's
 					// stocks you bought
-					view.updateCompany(model.nameOfCompany);
+					view.updateCompany(model.nameOfCompanyTemp);
 					// adds a sell your stock button
 					view.sellYourStocks();
 				}	
@@ -144,27 +144,27 @@ var view = {
 
 		// sell stock functionality
 		sellStock: function() {
-			// $('.sellStocksButton').on('click', 'button.sellStocksButton', function() {
-			// 	console.log("yes");
-			// 	// saving the textbox to a var
-			// 	var sellValue = $('.amountToSell').val();
-			// 	// checking to see if a user is selling too many shares
-			// 	if(sellValue > view.updateQuantity()) {
-			// 		alert("you can't sell more then you own!")
-			// 	} else {
-			// 		// adding the sale of shares to the balance
-			// 		model.balance = sellTotal * model.bidPrice;
-			// 		// updating the shares section based on how many shares are sold
-			// 		view.updateQuantity -= sellTotal;
-			// 		// removing the stock from the portfolio if the new quantity is 0
-			// 		if(view.updateQuantity === 0) {
-			// 			view.updateCompany.remove();
-			// 			view.updateQuantity.remove();
-			// 			view.updatePrice.remove();
-			// 			view.sellYourStocks.remove();
-			// 		}
-			// 	}
+			$(document.body).on('click', 'button.sellStocksButton', function() {
+				console.log("I work now");
+				// saving the textbox to a var
+				var sellValue = $('.amountToSell').val();
+				// checking to see if a user is selling too many shares
+				if(sellValue > view.updateQuantity()) {
+					alert("you can't sell more then you own!")
+				} else {
+					// adding the sale of shares to the balance
+					model.balance = sellTotal * model.bidPriceTemp;
+					// updating the shares section based on how many shares are sold
+					view.updateQuantity -= sellTotal;
+					// removing the stock from the portfolio if the new quantity is 0
+					if(view.updateQuantity === 0) {
+						view.updateCompany.remove();
+						view.updateQuantity.remove();
+						view.updatePrice.remove();
+						view.sellYourStocks.remove();
+					}
+				}
 
-			// });
+			});
 		}
 	};
