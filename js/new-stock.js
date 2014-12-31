@@ -85,7 +85,7 @@ controller = {
     },
     sellStocks: function() {
         $(document.body).on('click', 'button.sellStocksButton', function() {
-            if( $('.amountToSell').val() < $('.quantity').val()) {
+            if(Number($('.amountToSell').val()) > Number($('.quantity > p').text())) {
                 alert("You can't sell more than you own!");
             } else {
                 var current = $('.quantity > p').text(),
@@ -96,7 +96,7 @@ controller = {
                 model.balance += total;
                 view.update('.totalInBank', model.balance);
 
-                view.update('.quantity', (current - amount));
+                view.update('.quantity > p', (current - amount));
             }
         });
     },
