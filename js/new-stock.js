@@ -25,43 +25,52 @@ view = {
         });
 
         $('.sellStocksButton').on('click', function() {
-            console.log('success');
+            console.log('clicked');
         });
     }
 },
 controller = {
     lookupStocks: function() {
-        $.ajax({
-            url: 'http://data.benzinga.com/stock/' + $('.search').val(),
-            type: 'GET',
-            dataType: 'json',
-            error: function() {
-                alert('please enter a valid stock symbol!');
-                $('.search').val("");
-            },
-            success: function(data) {
-                // assign retrieved data to temp storage
-                temp.ask    = data.ask;
-                temp.bid    = data.bid;
-                temp.name   = data.name;
-                temp.symbol = data.symbol;
+        $('button.lookup').on('click', function() {
+            $.ajax({
+				url: 'http://data.benzinga.com/stock/' + $('.search').val(),
+                type: 'GET',
+                dataType: 'json',
+                error: function() {
+                    alert('ERROR: http request failed.');
+                },
+                success: function(data) {
+                    //debug
+                    console.dir(data);
+                    if (data.status !== 'error') {
+                        // assign retrieved data to temp storage
+                        temp.ask    = data.ask;
+                        temp.bid    = data.bid;
+                        temp.name   = data.name;
+                        temp.symbol = data.symbol;
+                        //debug
 
-                // update view
-                view.update('.leftSide h1', model.nameOfCompany);
-                view.update('.bid > p', model.bidPrice);
-                view.update('.ask > p', model.askPrice);
-            }
+                        // update view
+                        view.update('.leftSide h1', temp.name);
+                        view.update('.bid > p', temp.bid);
+                        view.update('.ask > p', temp.ask);
+                    } else {
+                        alert('please enter a valid stock symbol!');
+                        $('.search').val("");
+                    }
+                }
+            });
         });
     },
     buyStock: function() {
         $('.buy').on('click', function() {
             var quantity = $('.purchase').val();
-            var total = quantity * model.askPrice;
+            var total = quantity * temp.ask;
 
             if(total > model.balance) {
                 alert("you don't have enough money!");
             } else {
-               model.stocks.push(temp);
+               model.stocks.push({name: temp.name, bid: temp.bid, ask: temp.ask});
                console.dir(model.stocks);
 
                model.balance -= total;
@@ -70,29 +79,40 @@ controller = {
                view.append('.quantity', quantity);
                view.append('.pricePaid', temp.bid);
                view.append('.company', temp.name);
-               view.sellYourStocks();
+               view.sellStocks();
             }
         });
     },
     sellStocks: function() {
         $(document.body).on('click', 'button.sellStocksButton', function() {
-            console.log('I work now');
-            if( $('.amountToSell').val() > $('.quantity').val()) {
-                console.log("you can't sell more than you own");
+            if( $('.amountToSell').val() < $('.quantity').val()) {
+                alert("You can't sell more than you own!");
             } else {
-                console.log('this would be valid');
+                var current = $('.quantity > p').text(),
+                    price = $('.pricePaid > p').text(),
+                    amount = $('.amountToSell').val(),
+                    total = price * amount;
+
+                model.balance += total;
+                view.update('.totalInBank', model.balance);
+
+                view.update('.quantity', (current - amount));
             }
         });
+    },
+    init: function() {
+        this.lookupStocks();
+        this.buyStock();
+        this.sellStocks();
     }
 };
 
 $(document).ready(function() {
     view.update('.totalInBank', model.balance);
-    controller.lookupStocks();
-    controller.buyStock();
-    controller.sellStocks();
+    controller.init();
 
     $('.purchase').keyup(function() {
         $(this).val($(this).val().replace(/[^\d]/,''));
     });
 });
+
